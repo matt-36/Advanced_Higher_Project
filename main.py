@@ -1,2 +1,3 @@
-from flaskr.classes.holiday import Holiday
+from classes.holiday import Holiday
 import flask
+
