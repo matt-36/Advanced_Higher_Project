@@ -1,0 +1,3 @@
+from . import Holiday
+
+class Easyjet(Holiday): ...
