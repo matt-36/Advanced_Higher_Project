@@ -1,6 +1,7 @@
-from classes import Query, Holiday
+from classes.search import Query
+from classes.holiday import Holiday
 import flask
-from flask import render_template, request
+from flask import redirect, render_template, request
 
 app = flask.Flask(__name__)
 
@@ -16,17 +17,20 @@ def index():
         return render_template('search.html')
     else:
         # Logic for calling query function
-        ...
-    
-    return "You shouldnt be seeing this"
+        query = Query()
+        global_store['query'] = query
+        res = query.query()
+        global_store['results'] = res
+        return redirect("/results")
 
 @app.route('/results')
 def results():
+    res = global_store['results']
+    ret = ""
+    for h in res:
+        ret += str(h) + "<br>"
 
+    return ret
 
-    return render_template(
-        'results.html',\
-        
-    )
 
 app.run()
