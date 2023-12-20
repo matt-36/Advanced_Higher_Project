@@ -1,36 +1,37 @@
+import datetime
 from classes.search import Query
 from classes.holiday import Holiday
 import flask
-from flask import redirect, render_template, request
+from flask import redirect, render_template, request, session
 
 app = flask.Flask(__name__)
+app.secret_key = "secretkey"
 
-global_store = {
-    "query": Query(),
-    "results": [Holiday()]
-}
+offers = {}
 
 @app.route('/', methods=['GET', 'POST']) # Index
 def index():
     if request.method == "GET":
-
+        session["query"] = None
+        session["results"] = None
         return render_template('search.html')
     else:
         # Logic for calling query function
-        query = Query()
-        global_store['query'] = query
+        query = Query("05062024", "7", "LGW", "GRZA") #test data
         res = query.query()
-        global_store['results'] = res
-        return redirect("/results")
+        offers[str(query)] = res
+        # session["results"] = [h.to_json() for h in res]
+        return redirect(f"/results/{str(query)}")
 
-@app.route('/results')
-def results():
-    res = global_store['results']
-    ret = ""
-    for h in res:
-        ret += str(h) + "<br>"
-
-    return ret
+@app.route('/results/<queryid>')
+def results(queryid: str):
+    try:
+        res = offers[queryid]
+    except:
+        return redirect("/")
+    # delete results from storage after access
+    del offers[queryid]
+    return render_template("results.html", results = res)
 
 
 app.run()

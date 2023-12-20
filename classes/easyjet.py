@@ -1,9 +1,17 @@
+from typing import List
 from classes.holiday import Holiday
 
 class Easyjet(Holiday):
     def __init__(self, 
             # super parameters**
-                 
+            name: str,
+            rating: float,
+            ratings: int,
+            price: float,
+            deposit: float,
+            stay: int,
+            images: List[str],
+            date: str,
             # subclass parameters*
             resort_code, 
             resort_name, 
@@ -18,7 +26,17 @@ class Easyjet(Holiday):
             accom_unit_boards,
             transfer_id
             ) -> None:
-        super().__init__()
+        
+        super().__init__(
+            name,
+            rating,
+            ratings,
+            price,
+            deposit,
+            stay,
+            images,
+            date
+        )
 
         self.resort_code = resort_code 
         self.resort_name = resort_name 
@@ -35,6 +53,16 @@ class Easyjet(Holiday):
 
     
     def from_json(json):
+        #holiday
+        name = json["hotel"]["name"]
+        rating = json["hotel"]["rating"]
+        ratings = json["hotel"]["numberOfReviews"]
+        price = json["price"]
+        deposit = json["deposit"]
+        stay = json["stay"]
+        images = [img["medium"] for img in json["hotel"]["images"]]
+        date = json["date"]
+        # easyjet
         resort_code = json["hotel"]["resort"]["code"]
         resort_name = json["hotel"]["resort"]["name"]
         resort_url = json["hotel"]["resort"]["url"]
@@ -48,8 +76,4 @@ class Easyjet(Holiday):
         accom_unit_boards = [unit["board"] for unit in json["accom"]["unit"]]
         transfer_id = [transfer["code"] for transfer in json["transfers"]]
 
-        return Easyjet(resort_code, resort_name, resort_url, hotel_country_code, hotel_location_code, hotel_url, transport_id, accom_id, accom_pack_id, accom_unit_codes, accom_unit_boards, transfer_id)
-    
-    def __str__(self) -> str:
-        return f"{self.resort_name}: {self.get_provider()}"
-    
+        return Easyjet(name, rating, ratings, price, deposit, stay, images, date, resort_code, resort_name, resort_url, hotel_country_code, hotel_location_code, hotel_url, transport_id, accom_id, accom_pack_id, accom_unit_codes, accom_unit_boards, transfer_id)

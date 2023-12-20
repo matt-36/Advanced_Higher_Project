@@ -1,0 +1,25 @@
+<div class="results">
+    {% for holiday in results %}
+    <div class="holiday">
+        {{holiday.name}}
+        <div class="slideshow">
+            {% for image in holiday.images %}
+            <img src="{{image}}">
+            {% endfor %}
+        </div>
+        {{holiday.price}}
+    </div>
+    {% endfor %}
+</div>
+
+
+<style>
+    .slideshow {
+        display: flex;
+        overflow-y: hidden;
+        overflow-x: scroll;
+    }
+    .slideshow img {
+        scroll-snap-align: center;
+    }
+</style>
