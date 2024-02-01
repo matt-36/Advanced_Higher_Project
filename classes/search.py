@@ -5,7 +5,7 @@ from typing import List
 import requests
 
 from classes.holiday import Holiday
-from classes.easyjet import Easyjet
+from classes.easyjet import Easyjet, EasyjetSearchbar
 
 class Query:
   """
@@ -46,5 +46,27 @@ class Query:
     
 
 
+class SearchbarResult():
+  def __init__(self, query) -> None:
+    """
+    Params
+    --------
+    `query` - What the user has entered
+    `easyjet` - Easyjet results JSON
+    `thomascook` - Thomas Cook results JSON
+    """
+    self.query = query
 
+  def join_result(self) -> List[dict]:
+    # find locations with matching names and create dict {name: name, easyjet: {...}, thomascook: {...}, ...}
+    return [{}]
+    
 
+class Searchbar():
+  """
+  An instance of `Searchbar` is created for the search page to fetch the correct data to use for search quey
+  """
+  def __init__(self) -> None:
+    self.easyjet = EasyjetSearchbar()
+    ...
+    self.results = []

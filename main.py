@@ -17,7 +17,7 @@ def index():
         return render_template('search.html')
     else:
         # Logic for calling query function
-        query = Query("05062024", "7", "LGW", "GRZA") #test data
+        query = Query("05062024", 7, "LGW", "GRZA") #test data
         res = query.query()
         offers[str(query)] = res
         # session["results"] = [h.to_json() for h in res]
@@ -34,4 +34,4 @@ def results(queryid: str):
     return render_template("results.html", results = res)
 
 
-app.run()
+app.run("0.0.0.0")
