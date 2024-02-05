@@ -1,7 +1,7 @@
 from typing import List
-from classes.holiday import Holiday
 
-from classes.search import SearchbarResult
+import requests
+from classes.holiday import Holiday
 
 class Easyjet(Holiday):
     def __init__(self, 
@@ -87,7 +87,10 @@ class EasyjetSearchbar():
 
   def query(self, query) -> List[dict]:
     # send request
-
+    uri = "https://www.easyjet.com/holidays/_api/v1.0/destinations/search?=&query=" +\
+        query +\
+    "&from=&startDate=&endDate=&flexibleDays="
+    ret = requests.get(uri).json()
+    print(ret)
     # sanatize data
-    
-    return [{}]
+    return ret

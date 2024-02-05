@@ -92,10 +92,15 @@ class Searchbar():
     self.easyjet = EasyjetSearchbar()
     ...
     self.results: List[SearchbarResult] = []
-    
-    def join_result(self) -> List[dict]:
-      # find locations with matching names and create dict name: {easyjet: {...}, thomascook: {...}, ...}
-      ret = {}
-      for result in self.results:
-        ret[result.name]
-      return [{}]
+  def fetch_results(self, query):
+    ejres = self.easyjet.query(query)
+    for res in ejres:
+      self.results.append(
+        SearchbarResult.from_easyjet(res)
+      )
+  def join_result(self) -> List[dict]:
+    # find locations with matching names and create dict name: {easyjet: {...}, thomascook: {...}, ...}
+    ret = {}
+    for result in self.results:
+      ret[result.name]
+    return [{}]
