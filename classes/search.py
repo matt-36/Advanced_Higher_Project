@@ -47,19 +47,41 @@ class Query:
 
 
 class SearchbarResult():
-  def __init__(self, query) -> None:
+  def __init__(self, name,code,_type,available,provider) -> None:
     """
     Params
     --------
-    `query` - What the user has entered
-    `easyjet` - Easyjet results JSON
-    `thomascook` - Thomas Cook results JSON
+    
     """
-    self.query = query
+    # general 
+    self.name = name
+    self.type = _type
+    # provider specific
+    self.code = code 
+    self.available = available
+    self.provider = provider
 
-  def join_result(self) -> List[dict]:
-    # find locations with matching names and create dict {name: name, easyjet: {...}, thomascook: {...}, ...}
-    return [{}]
+  @staticmethod
+  def from_easyjet(data):
+    name = data["name"]
+    code = data["code"]
+    t = data["type"]
+    a = data["available"] == "true"
+    return SearchbarResult(name,code,t,a, "ej")
+
+  @staticmethod
+  def from_thomascook(data):
+    name = data["name"]
+    code = data["id"]
+    t = data["type"]
+    a = data["count"] != "0"
+    return SearchbarResult(name,code,t,a, "tc")
+
+  @staticmethod
+  def from_jet2(data): ...
+    
+
+  
     
 
 class Searchbar():
@@ -69,4 +91,11 @@ class Searchbar():
   def __init__(self) -> None:
     self.easyjet = EasyjetSearchbar()
     ...
-    self.results = []
+    self.results: List[SearchbarResult] = []
+    
+    def join_result(self) -> List[dict]:
+      # find locations with matching names and create dict name: {easyjet: {...}, thomascook: {...}, ...}
+      ret = {}
+      for result in self.results:
+        ret[result.name]
+      return [{}]
