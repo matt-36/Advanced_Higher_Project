@@ -1,5 +1,5 @@
 import datetime
-from classes.search import Query
+from classes.search import Query, Searchbar
 from classes.holiday import Holiday
 import flask
 from flask import redirect, render_template, request, session
@@ -8,6 +8,7 @@ app = flask.Flask(__name__)
 app.secret_key = "secretkey"
 
 offers = {}
+searchbar = Searchbar()
 
 @app.route('/', methods=['GET', 'POST']) # Index
 def index():
@@ -33,5 +34,8 @@ def results(queryid: str):
     del offers[queryid]
     return render_template("results.html", results = res)
 
+@app.route('/searchbar/<query>')
+def searchbar(query: str):
+    searchbar.
 
 app.run("0.0.0.0")
