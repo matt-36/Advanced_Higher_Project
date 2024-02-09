@@ -42,7 +42,7 @@ class Query:
 
   def __str__(self) -> str:
     # on d date goto y location for t days to return to x location
-    return self.start + self.destination + self.duration + self.departure
+    return str(self.start) + self.destination + str(self.duration) + self.departure
     
 
 
@@ -99,3 +99,4 @@ class Searchbar():
       for result in self.results:
         ret[result.name]
       return [{}]
+  

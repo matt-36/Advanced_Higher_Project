@@ -1,7 +1,6 @@
 from typing import List
 from classes.holiday import Holiday
 
-from classes.search import SearchbarResult
 
 class Easyjet(Holiday):
     def __init__(self, 

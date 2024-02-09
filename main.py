@@ -16,8 +16,15 @@ def index():
         session["results"] = None
         return render_template('search.html')
     else:
+        req = flask.request
+        _from = req.form['from']
+        _to = req.form['to']
+        _when = req.form['when']
+        _duration = req.form['duration']
+        _who = req.form['who']
+        print(_from, _to, _when, _who)
         # Logic for calling query function
-        query = Query("05062024", 7, "LGW", "GRZA") #test data
+        query = Query("", 7, "LGW", "GRZA") #test data
         res = query.query()
         offers[str(query)] = res
         # session["results"] = [h.to_json() for h in res]
