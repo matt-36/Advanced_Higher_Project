@@ -1,7 +1,11 @@
+
 <form method="post">
   <div class="search-bar">
     <input name="from" type="text" class="input-box" placeholder="From">
-    <input name="to" type="text" class="input-box" placeholder="To">
+
+    <input name="to" type="text" class="input-hidden" id="location">
+    <input type="text" class="input-box" placeholder="To" id="_to" oninput="this.onchange"> 
+
     <input name="when" type="date" class="date-picker" placeholder="When">
     <input name="duration" type="number" class="input-box" placeholder="Duration">
     <input name="who" type="text" class="input-box" placeholder="Who">
@@ -17,6 +21,9 @@
     align-items: center;
     width: 80%;
     margin: 20px auto;
+  }
+  .input-hidden {
+    display: none;
   }
   .input-box, .date-picker, .search {
     flex-basis: 0;
@@ -37,14 +44,23 @@
   }
 
 </style>
-
 <script>
-    function get_destinations() {
-        
+  function get_searchbar_results(q) {
+    if (q.length < 1) {
+      return;
     }
-</script>
+    fetch(`/searchbar/${q}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      });
+  }
 
-<form method="post">
-    <input name="destination" type="text">
-    <input type="submit">
-</form>
+  let _location = document.getElementById("location");
+  let _to = document.getElementById("_to");
+
+  _to.addEventListener("change", (e) => {
+    console.log(e.target.value);
+    let res = get_searchbar_results(e.target.value)
+  });
+</script>

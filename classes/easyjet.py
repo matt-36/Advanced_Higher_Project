@@ -87,10 +87,11 @@ class EasyjetSearchbar():
 
   def query(self, query) -> List[dict]:
     # send request
-    uri = "https://www.easyjet.com/holidays/_api/v1.0/destinations/search?=&query=" +\
+    print(query)
+    uri = "https://www.easyjet.com/holidays/_api/v1.0/destinations/search?query=" +\
         query +\
-    "&from=&startDate=&endDate=&flexibleDays="
+    "&flexibleDays=0"
     ret = requests.get(uri).json()
     print(ret)
     # sanatize data
-    return ret
+    return ret["destinations"]

@@ -42,7 +42,7 @@ class Query:
 
   def __str__(self) -> str:
     # on d date goto y location for t days to return to x location
-    return self.start + self.destination + self.duration + self.departure
+    return str(self.start) + self.destination + str(self.duration) + self.departure
 
 
 
@@ -99,7 +99,9 @@ class Searchbar():
       self.results.append(
         SearchbarResult.from_easyjet(res)
       )
-    return self.results
+    # join results here
+    print(ejres)
+    return ejres
 
   def join_result(self) -> List[dict]:
     # find locations with matching names and create dict name: {easyjet: {...}, thomascook: {...}, ...}

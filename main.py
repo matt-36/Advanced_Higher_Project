@@ -25,10 +25,9 @@ def index():
         _who = req.form['who']
         print(_from, _to, _when, _who)
         # Logic for calling query function
-        query = Query("", 7, "LGW", "GRZA") #test data
+        query = Query(_when, _duration, _from, _to) #test data
         res = query.query()
         offers[str(query)] = res
-        # session["results"] = [h.to_json() for h in res]
         return redirect(f"/results/{str(query)}")
 
 @app.route('/results/<queryid>')
@@ -42,7 +41,7 @@ def results(queryid: str):
     return render_template("results.html", results = res)
 
 @app.route('/searchbar/<query>')
-def searchbar(query: str):
-    searchbar.
-
+def get_searchbar(query: str):
+    return searchbar.fetch_results(query)
+    # return [{"test": "test"}]
 app.run("0.0.0.0")
