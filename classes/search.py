@@ -36,14 +36,14 @@ class Query:
       easyjet = Easyjet.from_json(ej)
       print(easyjet)
       easyjets.append(easyjet)
-    
+
     return easyjets
 
 
   def __str__(self) -> str:
     # on d date goto y location for t days to return to x location
-    return str(self.start) + self.destination + str(self.duration) + self.departure
-    
+    return self.start + self.destination + self.duration + self.departure
+
 
 
 class SearchbarResult():
@@ -51,7 +51,7 @@ class SearchbarResult():
     """
     Params
     --------
-    
+
     """
     # general 
     self.name = name
@@ -79,10 +79,10 @@ class SearchbarResult():
 
   @staticmethod
   def from_jet2(data): ...
-    
 
-  
-    
+
+
+
 
 class Searchbar():
   """
@@ -92,11 +92,18 @@ class Searchbar():
     self.easyjet = EasyjetSearchbar()
     ...
     self.results: List[SearchbarResult] = []
-    
-    def join_result(self) -> List[dict]:
-      # find locations with matching names and create dict name: {easyjet: {...}, thomascook: {...}, ...}
-      ret = {}
-      for result in self.results:
-        ret[result.name]
-      return [{}]
-  
+
+  def fetch_results(self, query):
+    ejres = self.easyjet.query(query)
+    for res in ejres:
+      self.results.append(
+        SearchbarResult.from_easyjet(res)
+      )
+    return self.results
+
+  def join_result(self) -> List[dict]:
+    # find locations with matching names and create dict name: {easyjet: {...}, thomascook: {...}, ...}
+    ret = {}
+    for result in self.results:
+      ret[result.name]
+    return [{}]
