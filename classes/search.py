@@ -18,8 +18,17 @@ class Query:
     self.duration = duration
     self.departure = departure
     self.destination = destination
-  def build_easyjet(self) -> str:
-    return "https://www.easyjet.com/holidays/_api/v1.0/search/packages?startDate=2024-06-05&flexibleDays=0&duration[0]=7&departure=LGW&geography=GR,GRZA&automaticAllocation=true&room[0].adults=2&room[0].children=0&room[0].infants=0&=&=&take=10&page=1&searchType=normal&distressedFlightsOnly=false&placementId=hotels_list"
+  # def build_easyjet(self) -> str:
+  #   return "https://www.easyjet.com/holidays/_api/v1.0/search/packages?startDate=2024-06-05&flexibleDays=0&duration[0]=7&departure=LGW&geography=GR,GRZA&automaticAllocation=true&room[0].adults=2&room[0].children=0&room[0].infants=0&=&=&take=10&page=1&searchType=normal&distressedFlightsOnly=false&placementId=hotels_list"
+  def build_queury(startDate, flex, duration, departure, geo, rooms, searchType, destination):
+    ret = BASE_API + "search/packages" +\
+    f"?startDate={startDate}" +\
+    f"&flexibleDays={flex}" +\
+    f"&duration[0]={duration}" +\
+    ""
+    return ret
+
+  
   def query(self) -> List[Holiday]:
     """
     Sends query to providers and collects responses

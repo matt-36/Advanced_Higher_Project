@@ -53,6 +53,31 @@ class Easyjet(Holiday):
         self.accom_unit_boards = accom_unit_boards 
         self.transfer_id = transfer_id
 
+    def build_offerlink(self, flex, departure):
+        date = self.date
+        to = date[0:len(date)-3] + (date.split("-")[2] + self.stay)
+        dst = self.hotel_location_code
+        geog = self.hotel_country_code + f",{dst}"
+        orgs = ""
+        for i, airport in enumerate(departure):
+            orgs += f"&org[{i}] = {airport}"
+        # for i, unit in enumerate(offer['accom']['unit']):
+        #   rooms += f"&"
+        
+        ret = "https://easyjet.com/holidays" +\
+        self.hotel_url +\
+        f"?ibf=true" +\
+        f"&to={to}" +\
+        f"&from={date}" +\
+        f"&dst={dst}" +\
+        f"&geog={geog}" +\
+        f"&flex={flex}" +\
+        f"&sAccId=" +\
+        orgs
+        # rooms +\
+        ""
+
+        return ret
     @staticmethod
     def from_json(data):
         #holiday
