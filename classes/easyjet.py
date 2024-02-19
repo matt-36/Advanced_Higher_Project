@@ -116,7 +116,7 @@ class EasyjetSearchbar():
     uri = "https://www.easyjet.com/holidays/_api/v1.0/destinations/search?query=" +\
         query +\
     "&flexibleDays=0"
-    ret = requests.get(uri).json()
+    ret = requests.get(uri).json()["destinations"]
     print(ret)
     # sanatize data
-    return ret["destinations"]
+    return ret
