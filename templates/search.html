@@ -33,6 +33,10 @@
     margin: 4px;
     align-content: center;
   }
+  .result:hover {
+    cursor: pointer;
+    background-color: #efefef;
+  }
   .search-bar {
     display: flex;
     justify-content: space-between;
@@ -63,18 +67,34 @@
 
 </style>
 <script>
-  function get_searchbar_results(q) {
+  function setLocation(name, ej, tc, j2, tu) {
+    document.getElementById("_to").value = name;
+    document.getElementById("location").value = `${ej},${tc},${j2},${tu}`;
+  }
+  async function get_searchbar_results(q) {
     let resultsbox = document.getElementById("dr");
     if (q.length < 3) {
       return;
     }
-    fetch(`/searchbar/${q}`)
+    let res = [];
+    await fetch(`/searchbar/${q}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        res = data;
+        for (let i = 0; i < data.length; i++) {
+          let resultDiv = document.createElement("div");
+          resultDiv.classList.add("result");
+          resultDiv.textContent = data[i].name;
+          resultDiv.id = data[i].name;
+          resultsbox.appendChild(resultDiv);
+        }
       });
+    for (let i = 0; i < res.length; i++) {
+      let el = document.getElementById(res[i].name);
+      console.log(el);
+      el.addEventListener("click", () => setLocation(res[i].name, res[i].ej, res[i].tc, res[i].j2, res[i].tu))
+    }
   }
-
   let _location = document.getElementById("location");
   let _to = document.getElementById("_to");
 

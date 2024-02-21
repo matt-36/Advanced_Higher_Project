@@ -134,7 +134,12 @@ class Searchbar():
     for result in self.results:
       print(result.name, result.provider, result.code, result.available, result.type)
       if result.type in self.ALLOWTYPES:
-        res[result.name] = {result.provider: {"code": result.code}}
+        res[result.name] = {}
+        res[result.name]["ej"] = {"code": ""}
+        res[result.name]["tc"] = {"code": ""}
+        res[result.name]["j2"] = {"code": ""}
+        res[result.name]["tu"] = {"code": ""}
+        res[result.name][result.provider] = {"code": result.code}
     for k,v in res.items():
       print(k, v)
       tmp = v
