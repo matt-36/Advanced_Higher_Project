@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #07004D;
+    background-color: #FFFFFF;
+    margin: 0;
+}
+.search-bar {
+    background-color: #3DA5D9;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.input-hidden {
+    display: none;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    background-color: #FFFFFF;
+    color: #000000;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    min-width: 30px;
+}
+
+input[type="text"]:focus {
+    box-shadow: 0 0 5px rgba(61, 165, 217, 0.7);
+}
+
+footer {
+    background-color: #000F08;
+    color: #FFFFFF;
+}
+
+.search {
+    background-color: #FF9F1C;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.dropdown-search {
+    position: absolute;
+    display: flex;
+    flex-basis: 0;
+    flex: 1 1 0px;
+    margin: 0 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-width:229px;
+    max-height: 500px;
+    flex-direction: column;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    align-items: center;
+}
+
+.link {
+    color: #3DA5D9;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #FF9F1C;
+}
+
+.result {
+    color: #07004D;
+    background-color: #FFFFFF;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    height: 35px;
+}
+
+.result:hover {
+    background-color: #FF9F1C;
+}
+
+/* Media Query for Mobile Users */
+@media only screen and (max-width: 1235px) {
+    .search-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

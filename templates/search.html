@@ -1,12 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
 <form method="post">
   <div class="search-bar">
-    <input name="from" type="text" class="input-box" placeholder="From">
+    <div class="dropdown-container">
+      <input name="from" type="text" class="input-box" placeholder="From">
+      <div class="dropdown-search">
+        {% for airport in airports %}
+        <div class="result">{{ airport.airportcode }}</div>
+        {% endfor %}
+      </div>
+    </div>
 
     <input name="to" type="text" class="input-hidden" id="location">
-    <div class="destination-results" id="dr">
+    <div class="dropdown-container">
       <input type="text" class="input-box" placeholder="To" id="_to" oninput="this.onchange"> 
-      <div class="result">
-        
+      <div class="dropdown-search" id="dr">
       </div>
     </div>
 
@@ -18,16 +26,7 @@
 </form>
 
 <style>
-  .destination-results {
-    display: flex;
-    flex-basis: 0;
-    flex: 1 1 0px;
-    margin: 0 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 300px;
-    flex-direction: column;
-  }
+
   .result {
     width: 100%;
     margin: 4px;
@@ -37,42 +36,23 @@
     cursor: pointer;
     background-color: #efefef;
   }
-  .search-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    margin: 20px auto;
-  }
-  .input-hidden {
-    display: none;
-  }
+
   .input-box, .date-picker, .search {
     flex-basis: 0;
     flex: 1 1 0px;
     margin: 0 10px;
-    height: 40px;
-  }
-
-  .search-bar input[type=text] {
-      padding: 10px;
-      margin: 5px;
-  }
-
-  .search-bar .search {
-      background-color: orange;
-      border: none;
-      
   }
 
 </style>
 <script>
   function setLocation(name, ej, tc, j2, tu) {
+    console.log(name, ej, tc, j2, tu);
     document.getElementById("_to").value = name;
     document.getElementById("location").value = `${ej},${tc},${j2},${tu}`;
   }
   async function get_searchbar_results(q) {
     let resultsbox = document.getElementById("dr");
+    resultsbox.innerHTML = "";
     if (q.length < 3) {
       return;
     }
@@ -92,14 +72,21 @@
     for (let i = 0; i < res.length; i++) {
       let el = document.getElementById(res[i].name);
       console.log(el);
-      el.addEventListener("click", () => setLocation(res[i].name, res[i].ej, res[i].tc, res[i].j2, res[i].tu))
+      el.addEventListener("click", () => setLocation(res[i].name, res[i].ej.code, res[i].tc.code, res[i].j2.code, res[i].tu.code))
     }
   }
+  var tt;
+  var qi = 2000;  
   let _location = document.getElementById("location");
   let _to = document.getElementById("_to");
 
-  _to.addEventListener("change", (e) => {
+  _to.addEventListener("keyup", (e) => {
+    clearTimeout(tt);
+    if (_to.value) {
+        tt = setTimeout(get_searchbar_results(e.target.value), qi);
+    }
     console.log(e.target.value);
-    let res = get_searchbar_results(e.target.value)
+    // let res = get_searchbar_results(e.target.value)
   });
 </script>
+{% endblock %}

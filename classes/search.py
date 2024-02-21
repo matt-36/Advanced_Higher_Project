@@ -21,18 +21,18 @@ class Query:
     self.who = who
   # def build_easyjet(self) -> str:
   #   return "/search/packages?startDate=2024-06-05&flexibleDays=0&duration[0]=7&departure=LGW&geography=GR,GRZA&automaticAllocation=true&room[0].adults=2&room[0].children=0&room[0].infants=0&=&=&take=10&page=1&searchType=normal&distressedFlightsOnly=false&placementId=hotels_list"
-  def build_easyjet(startDate, flex=0, duration=7, departure="LGW", geo="ES", rooms=[{"adults":2,"children":0,"infants":0}], searchType="normal", destination={"code":"ES","type":"country"}) -> str:
+  def build_easyjet(self, startDate, flex=0, duration=7, departure="LGW", geo="ES", rooms=[{"adults":2,"children":0,"infants":0}], searchType="normal", destination={"code":"ES","type":"country"}) -> str:
     def create_rooms(rooms):
       ret = ""
       for i,room in enumerate(rooms):
         ret += f"&room[{i}].adults={room['adults']}&room[{i}].children={room['children']}&room[{i}].infants={room['infants']}"
       return ret
-    ret = "https://www.easyjet.com/holidays/_api/v1.0" + "search/packages" +\
+    ret = "https://www.easyjet.com/holidays/_api/v1.0/search/packages" +\
     f"?startDate={startDate}" +\
     f"&flexibleDays={flex}" +\
     f"&duration[0]={duration}" +\
     f"&departure={departure}" +\
-    f"&geography={geo}" +\
+    f"&geography={geo.split(',')[0]}" +\
     f"&automaticAllocation=true" +\
     create_rooms(rooms) +\
     f"&take=10" +\
@@ -40,7 +40,8 @@ class Query:
     f"&searchType={searchType}" +\
     f"&distressedFlightsOnly=false" +\
     f"&placementId=hotels_list" +\
-    f"&destination={destination}"
+    f"&destinations[0]={destination['type']}:{destination['code'].split(',')[0]}"
+    print(ret)
     return ret
 
   
@@ -52,8 +53,9 @@ class Query:
     # Currently only for easyjet as it is designed.
 
     easyjet_req = requests.get(
-      self.build_easyjet()
+      self.build_easyjet(self.start, 0, self.duration, self.departure, self.destination, [{"adults": self.who, "children": 0, "infants": 0}], "normal", {"code": self.destination, "type": "country"})
     )
+    print(easyjet_req)
     easyjets_json = easyjet_req.json()["offers"]
     easyjets = []
     for ej in easyjets_json:
@@ -114,7 +116,7 @@ class Searchbar():
   """
   def __init__(self) -> None:
     self.easyjet = EasyjetSearchbar()
-    self.ALLOWTYPES = ["Country", "1", "City", "Region", "2", "Hotel"]
+    self.ALLOWTYPES = ["Country", "1"]
     self.results: List[SearchbarResult] = []
 
   def fetch_results(self, query):

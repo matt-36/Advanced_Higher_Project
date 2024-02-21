@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
-    <meta http-equiv="refresh" content="0; url=/">
     <title>{% block title %}{% endblock %} - Holidays</title>
+    {% endblock %}
 </head>
 <div class="app">
     {% block content %}{% endblock %}
