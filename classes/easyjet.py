@@ -105,6 +105,8 @@ class Easyjet(Holiday):
 
         return Easyjet(name, rating, ratings, price, deposit, stay, images, date, resort_code, resort_name, resort_url, hotel_country_code, hotel_location_code, hotel_url, transport_id, accom_id, accom_pack_id, accom_unit_codes, accom_unit_boards, transfer_id)
 
+    def get_provider(self) -> str:
+       return "EasyJet"
 
 
 class EasyjetSearchbar():

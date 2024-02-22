@@ -3,7 +3,7 @@
 <form method="post">
   <div class="search-bar">
     <div class="dropdown-container">
-      <input name="from" type="text" class="input-box" placeholder="From">
+      <input name="from" type="text" class="input-box" placeholder="From" value="EDI">
       <div class="dropdown-search">
         {% for airport in airports %}
         <div class="result">{{ airport.airportcode }}</div>
@@ -11,16 +11,16 @@
       </div>
     </div>
 
-    <input name="to" type="text" class="input-hidden" id="location">
+    <input name="to" type="text" class="input-hidden" id="location" value="ES,,,">
     <div class="dropdown-container">
-      <input type="text" class="input-box" placeholder="To" id="_to" oninput="this.onchange"> 
+      <input type="text" class="input-box" placeholder="To" id="_to" oninput="this.onchange" value="Spain"> 
       <div class="dropdown-search" id="dr">
       </div>
     </div>
 
-    <input name="when" type="date" class="date-picker" placeholder="When">
-    <input name="duration" type="number" class="input-box" placeholder="Duration">
-    <input name="who" type="text" class="input-box" placeholder="Who">
+    <input name="when" type="date" class="date-picker" placeholder="When" value="2024-06-08">
+    <input name="duration" type="number" class="input-box" placeholder="Duration" value="7">
+    <input name="who" type="text" class="input-box" placeholder="Who" value="2">
     <input type="submit" class="search">
   </div>
 </form>

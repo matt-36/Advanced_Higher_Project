@@ -27,18 +27,19 @@ def index():
         # Logic for calling query function
         query = Query(_when, _duration, _from, _to, _who) #test data
         res = query.query()
-        offers[str(query)] = res
+        offers[str(query)] = {"results": res, "query": query}
         return redirect(f"/results/{str(query)}")
 
 @app.route('/results/<queryid>')
 def results(queryid: str):
     try:
-        res = offers[queryid]
+        res = offers[queryid]["results"]
+        query = offers[queryid]["query"]
     except:
         return redirect("/")
     # delete results from storage after access
     del offers[queryid]
-    return render_template("results.html", results = res)
+    return render_template("results.html", results = res, query = query)
 
 @app.route('/searchbar/<query>')
 def get_searchbar(query: str):

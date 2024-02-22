@@ -63,8 +63,16 @@ class Query:
       print(easyjet)
       easyjets.append(easyjet)
 
-    return easyjets
+    ret = self.bubble_sort_holidays(easyjets)
+    return ret
 
+  def bubble_sort_holidays(self, holidays: List[Holiday]) -> List[Holiday]:
+    n = len(holidays)
+    for i in range(n):
+      for j in range(0, n-i-1):
+        if holidays[j].price > holidays[j+1].price:
+          holidays[j], holidays[j+1] = holidays[j+1], holidays[j]
+    return holidays
 
   def __str__(self) -> str:
     # on d date goto y location for t days to return to x location
