@@ -124,7 +124,6 @@ class Searchbar():
   """
   def __init__(self) -> None:
     self.easyjet = EasyjetSearchbar()
-    self.thomascook = ThomascookSearchbar()
     self.ALLOWTYPES = ["Country", "1"]
     self.results: List[SearchbarResult] = []
 
