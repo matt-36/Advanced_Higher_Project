@@ -23,9 +23,8 @@ def index():
         _when = req.form['when']
         _duration = req.form['duration']
         _who = req.form['who']
-        print(_from, _to, _when, _who)
         # Logic for calling query function
-        query = Query(_when, _duration, _from, _to, _who) #test data
+        query = Query(_when, _duration, _from, _to, _who) 
         res = query.query()
         offers[str(query)] = {"results": res, "query": query}
         return redirect(f"/results/{str(query)}")

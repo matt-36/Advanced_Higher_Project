@@ -9,6 +9,95 @@
     {% endblock %}
 </head>
 <div class="app">
+  <form method="post" action="/">
+  <div class="search-bar">
+    <div class="dropdown-container">
+      <input name="from" type="text" class="input-box" placeholder="From" value="EDI">
+      <div class="dropdown-search">
+        {% for airport in airports %}
+        <div class="result">{{ airport.airportcode }}</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <input name="to" type="text" class="input-hidden" id="location" value="ES,,,">
+    <div class="dropdown-container">
+      <input type="text" class="input-box" placeholder="To" id="_to" oninput="this.onchange" value="Spain"> 
+      <div class="dropdown-search" id="dr">
+      </div>
+    </div>
+
+    <input name="when" type="date" class="date-picker" placeholder="When" value="2024-06-08">
+    <input name="duration" type="number" class="input-box" placeholder="Duration" value="7">
+    <input name="who" type="text" class="input-box" placeholder="Who" value="2">
+    <input type="submit" class="search">
+  </div>
+</form>
+
+<style>
+
+  .result {
+    width: 100%;
+    margin: 4px;
+    align-content: center;
+  }
+  .result:hover {
+    cursor: pointer;
+    background-color: #efefef;
+  }
+
+  .input-box, .date-picker, .search {
+    flex-basis: 0;
+    flex: 1 1 0px;
+    margin: 0 10px;
+  }
+
+</style>
+<script>
+  function setLocation(name, ej, tc, j2, tu) {
+    console.log(name, ej, tc, j2, tu);
+    document.getElementById("_to").value = name;
+    document.getElementById("location").value = `${ej},${tc},${j2},${tu}`;
+  }
+  async function get_searchbar_results(q) {
+    let resultsbox = document.getElementById("dr");
+    resultsbox.innerHTML = "";
+    if (q.length < 3) {
+      return;
+    }
+    let res = [];
+    await fetch(`/searchbar/${q}`)
+      .then(response => response.json())
+      .then(data => {
+        res = data;
+        for (let i = 0; i < data.length; i++) {
+          let resultDiv = document.createElement("div");
+          resultDiv.classList.add("result");
+          resultDiv.textContent = data[i].name;
+          resultDiv.id = data[i].name;
+          resultsbox.appendChild(resultDiv);
+        }
+      });
+    for (let i = 0; i < res.length; i++) {
+      let el = document.getElementById(res[i].name);
+      console.log(el);
+      el.addEventListener("click", () => setLocation(res[i].name, res[i].ej.code, res[i].tc.code, res[i].j2.code, res[i].tu.code))
+    }
+  }
+  var tt;
+  var qi = 2000;  
+  let _location = document.getElementById("location");
+  let _to = document.getElementById("_to");
+
+  _to.addEventListener("keyup", (e) => {
+    clearTimeout(tt);
+    if (_to.value) {
+        tt = setTimeout(get_searchbar_results(e.target.value), qi);
+    }
+    console.log(e.target.value);
+    // let res = get_searchbar_results(e.target.value)
+  });
+</script>
     {% block content %}{% endblock %}
 </div>
 </html>

@@ -1,18 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-
-<div class="top-bar">
-    <a href="/search">Back to Search</a>
-    <div class="query-details">
-        <span>{{ query.departure }}->{{ query.destination }} {{ query.date }} {{ query.stay }} {{ query.who }}</span>
-        <span>Results: {{ results|length }}</span>
-    </div>
-</div>
-
 <div class="results">
     {% for holiday in results %}
     <div class="holiday">
-        <div class="title">{{holiday.name}}</div>
+        <div class="header">
+          <span class="title">{{holiday.name}}</span>
+        </div>
         <div class="slideshow">
             <button class="previous-button">&lt;</button>
             {% for image in holiday.images %}
@@ -20,71 +13,13 @@
             {% endfor %}
             <button class="next-button">&gt;</button>
         </div>
-
         <div class="footer">
-            <div class="provider">{{holiday.get_provider()}}</div>
-            <div class="price">£{{holiday.price}}</div>
+            <span class="provider">{{holiday.get_provider()}}</span>
+            <span class="price">£{{holiday.price}}</span>
         </div>
-
     </div>
     {% endfor %}
 </div>
-
-
-<style>
-    .slideshow {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 300px;
-        position: relative;
-    }
-
-    .slideshow img {
-        display: none;
-        max-width: 100%;
-        max-height: 100%;
-    }
-
-    .previous-button,
-    .next-button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        color: #333;
-        font-size: 20px;
-        transition: opacity 0.3s ease;
-    }
-
-    .previous-button:hover,
-    .next-button:hover {
-        opacity: 1;
-        background-color: #333;
-        color: #ddd;
-    }
-
-    .controls {
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
-    }
-
-    .controls button {
-        margin: 0 5px;
-        padding: 5px 10px;
-        background-color: #f1f1f1;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        color: #333;
-        font-size: 14px;
-        transition: background-color 0.3s ease;
-    }
-
-    .controls button:hover {
-        background-color: #ddd;
-    }
-</style>
 
 <script>
     // Slideshow logic
