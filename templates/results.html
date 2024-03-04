@@ -4,7 +4,16 @@
     {% for holiday in results %}
     <div class="holiday">
         <div class="header">
-          <span class="title">{{holiday.name}}</span>
+          <a href="{{holiday.url}}" class="title">{{holiday.name}}</a>
+          <div class="rating">
+            <span class="stars">
+              {% for i in range(holiday.starrating) %}
+              <i class="fa fa-star"></i>
+              {% endfor %}
+            </span>
+            <span class="reviews">User rating: {{holiday.rating}}/5</span>
+            <span>({{holiday.ratings}})</span>
+          </div>
         </div>
         <div class="slideshow">
             <button class="previous-button">&lt;</button>
@@ -22,12 +31,11 @@
 </div>
 
 <script>
-    // Slideshow logic
     const slideshows = document.querySelectorAll('.slideshow');
 
     slideshows.forEach((slideshow) => {
         const images = slideshow.querySelectorAll('img');
-        let currentIndex = 0;
+        let curr = 0;
 
         function showImage(index) {
             images.forEach((image, i) => {
@@ -40,13 +48,13 @@
         }
 
         function nextImage() {
-            currentIndex = (currentIndex + 1) % images.length;
-            showImage(currentIndex);
+            curr = (curr + 1) % images.length;
+            showImage(curr);
         }
 
         function previousImage() {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            showImage(currentIndex);
+            curr = (curr - 1 + images.length) % images.length;
+            showImage(curr);
         }
 
         // Event listeners
@@ -54,7 +62,7 @@
         slideshow.querySelector('.previous-button').addEventListener('click', previousImage);
 
         // Show the first image
-        showImage(currentIndex);
+        showImage(curr);
     });
 </script>
 

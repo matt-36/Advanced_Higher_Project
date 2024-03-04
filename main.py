@@ -1,8 +1,7 @@
-import datetime
-from classes.search import Query, Searchbar
-from classes.holiday import Holiday
 import flask
 from flask import redirect, render_template, request, session
+
+from classes.search import Query, Searchbar
 
 app = flask.Flask(__name__)
 app.secret_key = "secretkey"
@@ -24,7 +23,7 @@ def index():
         _duration = req.form['duration']
         _who = req.form['who']
         # Logic for calling query function
-        query = Query(_when, _duration, _from, _to, _who) 
+        query = Query(_when, int(_duration), _from, _to, _who) 
         res = query.query()
         offers[str(query)] = {"results": res, "query": query}
         return redirect(f"/results/{str(query)}")
@@ -34,10 +33,11 @@ def results(queryid: str):
     try:
         res = offers[queryid]["results"]
         query = offers[queryid]["query"]
-    except:
+    except Exception:
         return redirect("/")
     # delete results from storage after access
     del offers[queryid]
+    print(type(res[0].rating))
     return render_template("results.html", results = res, query = query)
 
 @app.route('/searchbar/<query>')

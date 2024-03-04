@@ -18,6 +18,10 @@
   background-color: #555;
 }
 
+.content {
+  margin: 0 auto;
+  padding: 20px;
+}
 
 .results {
     display: flex;
@@ -43,15 +47,18 @@
     text-align: center;
     transition: all 0.3s ease;
 }
-.holiday:hover {
-    background-color: #3DA5D9;
-    color: #FFFFFF;
-}
+
 .holiday .title {
     font-weight: 800;
     font-size: 22px;
     margin: 5px;
     padding: 0;
+    text-decoration: none;
+    color: white;
+}
+.holiday .title:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 .holiday span {
     margin: 5px;
@@ -91,57 +98,59 @@ a {
       position: relative;
   }
 
-  .slideshow img {
-      display: none;
-      max-width: 100%;
-      max-height: 100%;
-  }
+.slideshow img {
+    display: none;
+    max-width: 100%;
+    max-height: 100%;
+}
 
-  .previous-button,
-  .next-button {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      color: #333;
-      font-size: 20px;
-      transition: opacity 0.3s ease;
-  }
+.previous-button,
+.next-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    font-size: 20px;
+    transition: opacity 0.3s ease;
+}
 
-  .previous-button:hover,
-  .next-button:hover {
-      opacity: 1;
-      background-color: #333;
-      color: #ddd;
-  }
+.previous-button:hover,
+.next-button:hover {
+    opacity: 1;
+    background-color: #333;
+    color: #ddd;
+}
 
-  .controls {
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-  }
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
 
-  .controls button {
-      margin: 0 5px;
-      padding: 5px 10px;
-      background-color: #f1f1f1;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-      color: #333;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
-  }
+.controls button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #333;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
 
-  .controls button:hover {
-      background-color: #ddd;
-  }
+.controls button:hover {
+    background-color: #ddd;
+}
 
 body {
     font-family: 'Roboto', sans-serif;
     color: #3A405A;
     background-color: #3DA5D9;
     margin: 0;
+    min-height: 100vh;
 }
+
 .search-bar {
     background-color: #3A405A;
     color: #FFFFFF;
@@ -175,8 +184,17 @@ input:focus {
 }
 
 footer {
-    background-color: #000F08;
+    font-weight: 600;
+    font-family: monospace;
+    min-height: 15vh;
+    background-color: #222535;
     color: #FFFFFF;
+    position:absolute;
+    bottom:0;
+    min-width: 100vw;
+}
+footer span {
+  padding: 15px;
 }
 
 .search {
